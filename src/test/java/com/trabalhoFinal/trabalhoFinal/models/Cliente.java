@@ -1,44 +1,65 @@
 package com.trabalhoFinal.trabalhoFinal.models;
 
-import java.sql.Date;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Cliente {
-    private int cod_cliente;
+@Entity
+@Table(name = "cliente")
+public class Cliente implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "cod_cliente")
+    private Integer codCliente;
+
+    @Column(name = "nome", length = 50)
     private String nome;
-    private String nro_matricula;
-    private Date dt_nasc;
+
+    @Column(name = "nro_matricula", length = 11)
+    private String numeroMatricula;
+
+    @Column(name = "dt_nasc")
+    private java.sql.Date dataNascimento;
+
+    @Column(name = "telefone", length = 15)
     private String telefone;
+
+    @Column(name = "email", length = 100)
     private String email;
+
+    @Column(name = "senha", length = 255)
     private String senha;
+
+    @Column(name = "rua", length = 70)
     private String rua;
-    private String nro;
+
+    @Column(name = "nro", length = 15)
+    private String numero;
+
+    @Column(name = "bairro", length = 30)
     private String bairro;
+
+    @Column(name = "cidade", length = 40)
     private String cidade;
+
+    @Column(name = "cep", length = 9)
     private String cep;
 
-    public Cliente(int cod_cliente, String nome, String nro_matricula, Date dt_nasc, String telefone, String email,
-                   String senha, String rua, String nro, String bairro, String cidade, String cep) {
-        this.cod_cliente = cod_cliente;
-        this.nome = nome;
-        this.nro_matricula = nro_matricula;
-        this.dt_nasc = dt_nasc;
-        this.telefone = telefone;
-        this.email = email;
-        this.senha = senha;
-        this.rua = rua;
-        this.nro = nro;
-        this.bairro = bairro;
-        this.cidade = cidade;
-        this.cep = cep;
+    public Cliente() {
     }
 
-    public int getCod_cliente() {
-        return cod_cliente;
+    public Integer getCodCliente() {
+        return codCliente;
     }
 
-    public void setCod_cliente(int cod_cliente) {
-        this.cod_cliente = cod_cliente;
+    public void setCodCliente(Integer codCliente) {
+        this.codCliente = codCliente;
     }
 
     public String getNome() {
@@ -49,20 +70,20 @@ public class Cliente {
         this.nome = nome;
     }
 
-    public String getNro_matricula() {
-        return nro_matricula;
+    public String getNumeroMatricula() {
+        return numeroMatricula;
     }
 
-    public void setNro_matricula(String nro_matricula) {
-        this.nro_matricula = nro_matricula;
+    public void setNumeroMatricula(String numeroMatricula) {
+        this.numeroMatricula = numeroMatricula;
     }
 
-    public Date getDt_nasc() {
-        return dt_nasc;
+    public java.sql.Date getDataNascimento() {
+        return dataNascimento;
     }
 
-    public void setDt_nasc(Date dt_nasc) {
-        this.dt_nasc = dt_nasc;
+    public void setDataNascimento(java.sql.Date dataNascimento) {
+        this.dataNascimento = dataNascimento;
     }
 
     public String getTelefone() {
@@ -97,12 +118,12 @@ public class Cliente {
         this.rua = rua;
     }
 
-    public String getNro() {
-        return nro;
+    public String getNumero() {
+        return numero;
     }
 
-    public void setNro(String nro) {
-        this.nro = nro;
+    public void setNumero(String numero) {
+        this.numero = numero;
     }
 
     public String getBairro() {
@@ -133,57 +154,30 @@ public class Cliente {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Cliente cliente = (Cliente) o;
-
-        if (cod_cliente != cliente.cod_cliente) return false;
-        if (!Objects.equals(nome, cliente.nome)) return false;
-        if (!Objects.equals(nro_matricula, cliente.nro_matricula))
-            return false;
-        if (!Objects.equals(dt_nasc, cliente.dt_nasc)) return false;
-        if (!Objects.equals(telefone, cliente.telefone)) return false;
-        if (!Objects.equals(email, cliente.email)) return false;
-        if (!Objects.equals(senha, cliente.senha)) return false;
-        if (!Objects.equals(rua, cliente.rua)) return false;
-        if (!Objects.equals(nro, cliente.nro)) return false;
-        if (!Objects.equals(bairro, cliente.bairro)) return false;
-        if (!Objects.equals(cidade, cliente.cidade)) return false;
-        return Objects.equals(cep, cliente.cep);
+        return Objects.equals(codCliente, cliente.codCliente);
     }
 
     @Override
     public int hashCode() {
-        int result = cod_cliente;
-        result = 31 * result + (nome != null ? nome.hashCode() : 0);
-        result = 31 * result + (nro_matricula != null ? nro_matricula.hashCode() : 0);
-        result = 31 * result + (dt_nasc != null ? dt_nasc.hashCode() : 0);
-        result = 31 * result + (telefone != null ? telefone.hashCode() : 0);
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (senha != null ? senha.hashCode() : 0);
-        result = 31 * result + (rua != null ? rua.hashCode() : 0);
-        result = 31 * result + (nro != null ? nro.hashCode() : 0);
-        result = 31 * result + (bairro != null ? bairro.hashCode() : 0);
-        result = 31 * result + (cidade != null ? cidade.hashCode() : 0);
-        result = 31 * result + (cep != null ? cep.hashCode() : 0);
-        return result;
+        return Objects.hash(codCliente);
     }
 
     @Override
     public String toString() {
         return "Cliente{" +
-                "cod_cliente=" + cod_cliente +
+                "codCliente=" + codCliente +
                 ", nome='" + nome + '\'' +
-                ", nro_matricula='" + nro_matricula + '\'' +
-                ", dt_nasc=" + dt_nasc +
+                ", numeroMatricula='" + numeroMatricula + '\'' +
+                ", dataNascimento=" + dataNascimento +
                 ", telefone='" + telefone + '\'' +
                 ", email='" + email + '\'' +
                 ", senha='" + senha + '\'' +
                 ", rua='" + rua + '\'' +
-                ", nro='" + nro + '\'' +
+                ", numero='" + numero + '\'' +
                 ", bairro='" + bairro + '\'' +
                 ", cidade='" + cidade + '\'' +
                 ", cep='" + cep + '\'' +
                 '}';
     }
-
 }

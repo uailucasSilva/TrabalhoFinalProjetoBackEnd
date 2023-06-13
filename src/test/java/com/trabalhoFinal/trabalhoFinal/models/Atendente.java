@@ -1,37 +1,53 @@
 package com.trabalhoFinal.trabalhoFinal.models;
 
-import java.sql.Date;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import java.io.Serializable;
 import java.util.Objects;
+
 @Entity
-@Table(name = "email_table")
-public class Atendente {
-    private int cod_atendente;
+@Table(name = "atendente")
+public class Atendente implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "cod_atendente")
+    private Integer codAtendente;
+
+    @Column(name = "nome", length = 70)
     private String nome;
-    private String nro_matricula;
-    private Date dt_nasc;
+
+    @Column(name = "nro_matricula", length = 11)
+    private String numeroMatricula;
+
+    @Column(name = "dt_nasc")
+    private java.sql.Date dataNascimento;
+
+    @Column(name = "telefone", length = 15)
     private String telefone;
+
+    @Column(name = "email", length = 100)
     private String email;
+
+    @Column(name = "senha", length = 255)
     private String senha;
-    private int nvl_acesso;
 
-    public Atendente(int cod_atendente, String nome, String nro_matricula, Date dt_nasc, String telefone,
-                     String email, String senha, int nvl_acesso) {
-        this.cod_atendente = cod_atendente;
-        this.nome = nome;
-        this.nro_matricula = nro_matricula;
-        this.dt_nasc = dt_nasc;
-        this.telefone = telefone;
-        this.email = email;
-        this.senha = senha;
-        this.nvl_acesso = nvl_acesso;
+    @Column(name = "nvl_acesso")
+    private int nivelAcesso;
+
+    public Atendente() {
     }
 
-    public int getCod_atendente() {
-        return cod_atendente;
+    public Integer getCodAtendente() {
+        return codAtendente;
     }
 
-    public void setCod_atendente(int cod_atendente) {
-        this.cod_atendente = cod_atendente;
+    public void setCodAtendente(Integer codAtendente) {
+        this.codAtendente = codAtendente;
     }
 
     public String getNome() {
@@ -42,20 +58,20 @@ public class Atendente {
         this.nome = nome;
     }
 
-    public String getNro_matricula() {
-        return nro_matricula;
+    public String getNumeroMatricula() {
+        return numeroMatricula;
     }
 
-    public void setNro_matricula(String nro_matricula) {
-        this.nro_matricula = nro_matricula;
+    public void setNumeroMatricula(String numeroMatricula) {
+        this.numeroMatricula = numeroMatricula;
     }
 
-    public Date getDt_nasc() {
-        return dt_nasc;
+    public java.sql.Date getDataNascimento() {
+        return dataNascimento;
     }
 
-    public void setDt_nasc(Date dt_nasc) {
-        this.dt_nasc = dt_nasc;
+    public void setDataNascimento(java.sql.Date dataNascimento) {
+        this.dataNascimento = dataNascimento;
     }
 
     public String getTelefone() {
@@ -82,12 +98,12 @@ public class Atendente {
         this.senha = senha;
     }
 
-    public int getNvl_acesso() {
-        return nvl_acesso;
+    public int getNivelAcesso() {
+        return nivelAcesso;
     }
 
-    public void setNvl_acesso(int nvl_acesso) {
-        this.nvl_acesso = nvl_acesso;
+    public void setNivelAcesso(int nivelAcesso) {
+        this.nivelAcesso = nivelAcesso;
     }
 
     @Override
@@ -95,32 +111,25 @@ public class Atendente {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Atendente atendente = (Atendente) o;
-        return cod_atendente == atendente.cod_atendente &&
-                Objects.equals(nome, atendente.nome) &&
-                Objects.equals(nro_matricula, atendente.nro_matricula) &&
-                Objects.equals(dt_nasc, atendente.dt_nasc) &&
-                Objects.equals(telefone, atendente.telefone) &&
-                Objects.equals(email, atendente.email) &&
-                Objects.equals(senha, atendente.senha) &&
-                nvl_acesso == atendente.nvl_acesso;
+        return Objects.equals(codAtendente, atendente.codAtendente);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(cod_atendente, nome, nro_matricula, dt_nasc, telefone, email, senha, nvl_acesso);
+        return Objects.hash(codAtendente);
     }
 
     @Override
     public String toString() {
         return "Atendente{" +
-                "cod_atendente=" + cod_atendente +
+                "codAtendente=" + codAtendente +
                 ", nome='" + nome + '\'' +
-                ", nro_matricula='" + nro_matricula + '\'' +
-                ", dt_nasc=" + dt_nasc +
+                ", numeroMatricula='" + numeroMatricula + '\'' +
+                ", dataNascimento=" + dataNascimento +
                 ", telefone='" + telefone + '\'' +
                 ", email='" + email + '\'' +
                 ", senha='" + senha + '\'' +
-                ", nvl_acesso=" + nvl_acesso +
+                ", nivelAcesso=" + nivelAcesso +
                 '}';
     }
 }
