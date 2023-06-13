@@ -2,7 +2,8 @@ package com.trabalhoFinal.trabalhoFinal.models;
 
 import java.sql.Date;
 import java.util.Objects;
-
+@Entity
+@Table(name = "email_table")
 public class Atendente {
     private int cod_atendente;
     private String nome;
