@@ -1,54 +1,67 @@
 package com.trabalhoFinal.trabalhoFinal.models;
 
-import java.sql.Date;
+import jakarta.persistence.*;
+
+import java.io.Serializable;
+import java.util.Date;
 import java.util.Objects;
 
-public class Atendimento {
-    private int cod_atendimento;
-    private int cod_atendente;
-    private int cod_solicitacao;
-    private Date dt_hora_atendimento;
+@Entity
+@Table(name = "atendimento")
+public class Atendimento implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "cod_atendimento")
+    private Integer codAtendimento;
+
+    @ManyToOne
+    @JoinColumn(name = "cod_atendente", foreignKey = @ForeignKey(name = "fk_atendimento_atendente"))
+    private Atendente atendente;
+
+    @ManyToOne
+    @JoinColumn(name = "cod_solicitacao", foreignKey = @ForeignKey(name = "fk_atendimento_solicitacao"))
+    private Solicitacao solicitacao;
+
+    @Column(name = "dt_hora_atendimento")
+    private Date dataHoraAtendimento;
+
+    @Column(name = "observacao", length = 255)
     private String observacao;
 
-
-    public Atendimento(int cod_atendimento, int cod_atendente, int cod_solicitacao, Date dt_hora_atendimento, String observacao) {
-        this.cod_atendimento = cod_atendimento;
-        this.cod_atendente = cod_atendente;
-        this.cod_solicitacao = cod_solicitacao;
-        this.dt_hora_atendimento = dt_hora_atendimento;
-        this.observacao = observacao;
+    public Atendimento() {
     }
 
-    public int getCod_atendimento() {
-        return cod_atendimento;
+    public Integer getCodAtendimento() {
+        return codAtendimento;
     }
 
-    public void setCod_atendimento(int cod_atendimento) {
-        this.cod_atendimento = cod_atendimento;
+    public void setCodAtendimento(Integer codAtendimento) {
+        this.codAtendimento = codAtendimento;
     }
 
-    public int getCod_atendente() {
-        return cod_atendente;
+    public Atendente getAtendente() {
+        return atendente;
     }
 
-    public void setCod_atendente(int cod_atendente) {
-        this.cod_atendente = cod_atendente;
+    public void setAtendente(Atendente atendente) {
+        this.atendente = atendente;
     }
 
-    public int getCod_solicitacao() {
-        return cod_solicitacao;
+    public Solicitacao getSolicitacao() {
+        return solicitacao;
     }
 
-    public void setCod_solicitacao(int cod_solicitacao) {
-        this.cod_solicitacao = cod_solicitacao;
+    public void setSolicitacao(Solicitacao solicitacao) {
+        this.solicitacao = solicitacao;
     }
 
-    public Date getDt_hora_atendimento() {
-        return dt_hora_atendimento;
+    public Date getDataHoraAtendimento() {
+        return dataHoraAtendimento;
     }
 
-    public void setDt_hora_atendimento(Date dt_hora_atendimento) {
-        this.dt_hora_atendimento = dt_hora_atendimento;
+    public void setDataHoraAtendimento(Date dataHoraAtendimento) {
+        this.dataHoraAtendimento = dataHoraAtendimento;
     }
 
     public String getObservacao() {
@@ -64,27 +77,22 @@ public class Atendimento {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Atendimento that = (Atendimento) o;
-        return cod_atendimento == that.cod_atendimento &&
-                cod_atendente == that.cod_atendente &&
-                cod_solicitacao == that.cod_solicitacao &&
-                Objects.equals(dt_hora_atendimento, that.dt_hora_atendimento) &&
-                Objects.equals(observacao, that.observacao);
+        return Objects.equals(codAtendimento, that.codAtendimento);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(cod_atendimento, cod_atendente, cod_solicitacao, dt_hora_atendimento, observacao);
+        return Objects.hash(codAtendimento);
     }
 
     @Override
     public String toString() {
         return "Atendimento{" +
-                "cod_atendimento=" + cod_atendimento +
-                ", cod_atendente=" + cod_atendente +
-                ", cod_solicitacao=" + cod_solicitacao +
-                ", dt_hora_atendimento=" + dt_hora_atendimento +
+                "codAtendimento=" + codAtendimento +
+                ", atendente=" + atendente +
+                ", solicitacao=" + solicitacao +
+                ", dataHoraAtendimento=" + dataHoraAtendimento +
                 ", observacao='" + observacao + '\'' +
                 '}';
     }
 }
-

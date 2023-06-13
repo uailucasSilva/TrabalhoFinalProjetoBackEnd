@@ -1,31 +1,52 @@
 package com.trabalhoFinal.trabalhoFinal.models;
 
-import java.sql.Date;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.ForeignKey;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import java.io.Serializable;
+import java.util.Date;
 import java.util.Objects;
 
-public class Dispositivo {
-    private int cod_dispositivo;
+@Entity
+@Table(name = "dispositivo")
+public class Dispositivo implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "cod_dispositivo")
+    private Integer codDispositivo;
+
+    @Column(name = "nome", length = 30)
     private String nome;
+
+    @Column(name = "descricao", length = 255)
     private String descricao;
-    private Date dt_cadastro;
-    private Date dt_devolucao;
-    private int cod_cliente;
 
-    public Dispositivo(int cod_dispositivo, String nome, String descricao, Date dt_cadastro, Date dt_devolucao, int cod_cliente) {
-        this.cod_dispositivo = cod_dispositivo;
-        this.nome = nome;
-        this.descricao = descricao;
-        this.dt_cadastro = dt_cadastro;
-        this.dt_devolucao = dt_devolucao;
-        this.cod_cliente = cod_cliente;
+    @Column(name = "dt_cadastro")
+    private Date dataCadastro;
+
+    @Column(name = "dt_devolucao")
+    private Date dataDevolucao;
+
+    @ManyToOne
+    @JoinColumn(name = "cod_cliente", foreignKey = @ForeignKey(name = "fk_dispositivo_cliente"))
+    private Cliente cliente;
+
+    public Dispositivo() {
     }
 
-    public int getCod_dispositivo() {
-        return cod_dispositivo;
+    public Integer getCodDispositivo() {
+        return codDispositivo;
     }
 
-    public void setCod_dispositivo(int cod_dispositivo) {
-        this.cod_dispositivo = cod_dispositivo;
+    public void setCodDispositivo(Integer codDispositivo) {
+        this.codDispositivo = codDispositivo;
     }
 
     public String getNome() {
@@ -44,65 +65,52 @@ public class Dispositivo {
         this.descricao = descricao;
     }
 
-    public Date getDt_cadastro() {
-        return dt_cadastro;
+    public Date getDataCadastro() {
+        return dataCadastro;
     }
 
-    public void setDt_cadastro(Date dt_cadastro) {
-        this.dt_cadastro = dt_cadastro;
+    public void setDataCadastro(Date dataCadastro) {
+        this.dataCadastro = dataCadastro;
     }
 
-    public Date getDt_devolucao() {
-        return dt_devolucao;
+    public Date getDataDevolucao() {
+        return dataDevolucao;
     }
 
-    public void setDt_devolucao(Date dt_devolucao) {
-        this.dt_devolucao = dt_devolucao;
+    public void setDataDevolucao(Date dataDevolucao) {
+        this.dataDevolucao = dataDevolucao;
     }
 
-    public int getCod_cliente() {
-        return cod_cliente;
+    public Cliente getCliente() {
+        return cliente;
     }
 
-    public void setCod_cliente(int cod_cliente) {
-        this.cod_cliente = cod_cliente;
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Dispositivo that = (Dispositivo) o;
-
-        if (cod_dispositivo != that.cod_dispositivo) return false;
-        if (cod_cliente != that.cod_cliente) return false;
-        if (!Objects.equals(nome, that.nome)) return false;
-        if (!Objects.equals(descricao, that.descricao)) return false;
-        if (!Objects.equals(dt_cadastro, that.dt_cadastro)) return false;
-        return Objects.equals(dt_devolucao, that.dt_devolucao);
+        return Objects.equals(codDispositivo, that.codDispositivo);
     }
 
     @Override
     public int hashCode() {
-        int result = cod_dispositivo;
-        result = 31 * result + (nome != null ? nome.hashCode() : 0);
-        result = 31 * result + (descricao != null ? descricao.hashCode() : 0);
-        result = 31 * result + (dt_cadastro != null ? dt_cadastro.hashCode() : 0);
-        result = 31 * result + (dt_devolucao != null ? dt_devolucao.hashCode() : 0);
-        result = 31 * result + cod_cliente;
-        return result;
+        return Objects.hash(codDispositivo);
     }
 
     @Override
     public String toString() {
         return "Dispositivo{" +
-                "cod_dispositivo=" + cod_dispositivo +
+                "codDispositivo=" + codDispositivo +
                 ", nome='" + nome + '\'' +
                 ", descricao='" + descricao + '\'' +
-                ", dt_cadastro=" + dt_cadastro +
-                ", dt_devolucao=" + dt_devolucao +
-                ", cod_cliente=" + cod_cliente +
+                ", dataCadastro=" + dataCadastro +
+                ", dataDevolucao=" + dataDevolucao +
+                ", cliente=" + cliente +
                 '}';
     }
 }

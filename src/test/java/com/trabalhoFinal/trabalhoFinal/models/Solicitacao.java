@@ -1,34 +1,56 @@
 package com.trabalhoFinal.trabalhoFinal.models;
 
-import java.sql.Date;
+import jakarta.persistence.*;
+
+import java.io.Serializable;
+import java.util.Date;
 import java.util.Objects;
 
-public class Solicitacao {
-    private int cod_solicitacao;
+@Entity
+@Table(name = "solicitacao")
+public class Solicitacao implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "cod_solicitacao")
+    private Integer codSolicitacao;
+
+    @Column(name = "titulo", nullable = false, length = 30)
     private String titulo;
+
+    @Column(name = "descricao", length = 255)
     private String descricao;
-    private Date dt_hora_criacao;
-    private Date dt_hora_finalizacao;
-    private String status_solicitacao;
-    private int cod_dispositivo;
 
-    public Solicitacao(int cod_solicitacao, String titulo, String descricao, Date dt_hora_criacao,
-                       Date dt_hora_finalizacao, String status_solicitacao, int cod_dispositivo) {
-        this.cod_solicitacao = cod_solicitacao;
-        this.titulo = titulo;
-        this.descricao = descricao;
-        this.dt_hora_criacao = dt_hora_criacao;
-        this.dt_hora_finalizacao = dt_hora_finalizacao;
-        this.status_solicitacao = status_solicitacao;
-        this.cod_dispositivo = cod_dispositivo;
+    @Column(name = "dt_hora_criacao")
+    private Date dataHoraCriacao;
+
+    @Column(name = "dt_hora_finalizacao")
+    private Date dataHoraFinalizacao;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status_solicitacao", length = 20)
+    private StatusSolicitacao statusSolicitacao;
+
+    @ManyToOne
+    @JoinColumn(name = "cod_dispositivo", foreignKey = @ForeignKey(name = "fk_solicitacao_dispositivo"))
+    private Dispositivo dispositivo;
+
+    public enum StatusSolicitacao {
+        AGUARDANDO_ATENDIMENTO,
+        EM_ATENDIMENTO,
+        ENCERRADO,
+        CANCELADO
     }
 
-    public int getCod_solicitacao() {
-        return cod_solicitacao;
+    public Solicitacao() {
     }
 
-    public void setCod_solicitacao(int cod_solicitacao) {
-        this.cod_solicitacao = cod_solicitacao;
+    public Integer getCodSolicitacao() {
+        return codSolicitacao;
+    }
+
+    public void setCodSolicitacao(Integer codSolicitacao) {
+        this.codSolicitacao = codSolicitacao;
     }
 
     public String getTitulo() {
@@ -47,36 +69,36 @@ public class Solicitacao {
         this.descricao = descricao;
     }
 
-    public Date getDt_hora_criacao() {
-        return dt_hora_criacao;
+    public Date getDataHoraCriacao() {
+        return dataHoraCriacao;
     }
 
-    public void setDt_hora_criacao(Date dt_hora_criacao) {
-        this.dt_hora_criacao = dt_hora_criacao;
+    public void setDataHoraCriacao(Date dataHoraCriacao) {
+        this.dataHoraCriacao = dataHoraCriacao;
     }
 
-    public Date getDt_hora_finalizacao() {
-        return dt_hora_finalizacao;
+    public Date getDataHoraFinalizacao() {
+        return dataHoraFinalizacao;
     }
 
-    public void setDt_hora_finalizacao(Date dt_hora_finalizacao) {
-        this.dt_hora_finalizacao = dt_hora_finalizacao;
+    public void setDataHoraFinalizacao(Date dataHoraFinalizacao) {
+        this.dataHoraFinalizacao = dataHoraFinalizacao;
     }
 
-    public String getStatus_solicitacao() {
-        return status_solicitacao;
+    public StatusSolicitacao getStatusSolicitacao() {
+        return statusSolicitacao;
     }
 
-    public void setStatus_solicitacao(String status_solicitacao) {
-        this.status_solicitacao = status_solicitacao;
+    public void setStatusSolicitacao(StatusSolicitacao statusSolicitacao) {
+        this.statusSolicitacao = statusSolicitacao;
     }
 
-    public int getCod_dispositivo() {
-        return cod_dispositivo;
+    public Dispositivo getDispositivo() {
+        return dispositivo;
     }
 
-    public void setCod_dispositivo(int cod_dispositivo) {
-        this.cod_dispositivo = cod_dispositivo;
+    public void setDispositivo(Dispositivo dispositivo) {
+        this.dispositivo = dispositivo;
     }
 
     @Override
@@ -84,31 +106,24 @@ public class Solicitacao {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Solicitacao that = (Solicitacao) o;
-        return cod_solicitacao == that.cod_solicitacao &&
-                cod_dispositivo == that.cod_dispositivo &&
-                Objects.equals(titulo, that.titulo) &&
-                Objects.equals(descricao, that.descricao) &&
-                Objects.equals(dt_hora_criacao, that.dt_hora_criacao) &&
-                Objects.equals(dt_hora_finalizacao, that.dt_hora_finalizacao) &&
-                Objects.equals(status_solicitacao, that.status_solicitacao);
+        return Objects.equals(codSolicitacao, that.codSolicitacao);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(cod_solicitacao, titulo, descricao, dt_hora_criacao, dt_hora_finalizacao, status_solicitacao, cod_dispositivo);
+        return Objects.hash(codSolicitacao);
     }
 
     @Override
     public String toString() {
         return "Solicitacao{" +
-                "cod_solicitacao=" + cod_solicitacao +
+                "codSolicitacao=" + codSolicitacao +
                 ", titulo='" + titulo + '\'' +
                 ", descricao='" + descricao + '\'' +
-                ", dt_hora_criacao=" + dt_hora_criacao +
-                ", dt_hora_finalizacao=" + dt_hora_finalizacao +
-                ", status_solicitacao='" + status_solicitacao + '\'' +
-                ", cod_dispositivo=" + cod_dispositivo +
+                ", dataHoraCriacao=" + dataHoraCriacao +
+                ", dataHoraFinalizacao=" + dataHoraFinalizacao +
+                ", statusSolicitacao=" + statusSolicitacao +
+                ", dispositivo=" + dispositivo +
                 '}';
     }
 }
-
