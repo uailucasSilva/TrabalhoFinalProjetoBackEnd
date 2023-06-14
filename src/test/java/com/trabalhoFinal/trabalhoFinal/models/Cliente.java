@@ -54,7 +54,7 @@ public class Cliente implements Serializable {
     public Cliente() {
     }
 
-    public Integer getCodCliente() {
+    public Long getCodCliente() {
         return codCliente;
     }
 
