@@ -41,7 +41,7 @@ public class Dispositivo implements Serializable {
     public Dispositivo() {
     }
 
-    public Integer getCodDispositivo() {
+    public Long getCodDispositivo() {
         return codDispositivo;
     }
 

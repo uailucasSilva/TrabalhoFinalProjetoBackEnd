@@ -16,7 +16,7 @@ public class Atendente implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cod_atendente")
-    private Integer codAtendente;
+    private Long codAtendente;
 
     @Column(name = "nome", length = 70)
     private String nome;
@@ -47,7 +47,7 @@ public class Atendente implements Serializable {
     }
 
     public void setCodAtendente(Integer codAtendente) {
-        this.codAtendente = codAtendente;
+        this.codAtendente = Long.valueOf(codAtendente);
     }
 
     public String getNome() {

@@ -37,7 +37,7 @@ public class AtendenteService {
         return null;
     }
 
-    //Deletar cliente
+    //Deletar Atendente
     public void deleteAtendente(Long id) {
         var dbCliente = findById(id);
         if( dbCliente != null && !dbCliente.isEmpty()) {
