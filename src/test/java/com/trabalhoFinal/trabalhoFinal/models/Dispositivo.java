@@ -42,7 +42,7 @@ public class Dispositivo implements Serializable {
     }
 
     public Long getCodDispositivo() {
-        return codDispositivo;
+        return Long.valueOf(codDispositivo);
     }
 
     public void setCodDispositivo(Integer codDispositivo) {
