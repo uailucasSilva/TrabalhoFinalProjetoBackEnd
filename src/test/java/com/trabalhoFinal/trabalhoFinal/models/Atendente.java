@@ -42,7 +42,7 @@ public class Atendente implements Serializable {
     public Atendente() {
     }
 
-    public Integer getCodAtendente() {
+    public Long getCodAtendente() {
         return codAtendente;
     }
 
