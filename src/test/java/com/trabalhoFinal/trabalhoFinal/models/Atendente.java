@@ -1,6 +1,6 @@
 package com.trabalhoFinal.trabalhoFinal.models;
 
-import com.trabalhoif.if2023.enums.NivelDeAcesso;
+import com.trabalhoFinal.trabalhoFinal.enums.NivelDeAcesso;
 import jakarta.persistence.*;
 import lombok.*;
 
