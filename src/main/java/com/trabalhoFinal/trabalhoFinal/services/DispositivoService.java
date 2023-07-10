@@ -1,6 +1,5 @@
 package com.trabalhoFinal.trabalhoFinal.services;
 
-import com.trabalhoFinal.trabalhoFinal.models.Atendente;
 import com.trabalhoFinal.trabalhoFinal.models.Dispositivo;
 import com.trabalhoFinal.trabalhoFinal.repositories.DispositivoRepository;
 import org.springframework.beans.factory.annotation.Autowired;

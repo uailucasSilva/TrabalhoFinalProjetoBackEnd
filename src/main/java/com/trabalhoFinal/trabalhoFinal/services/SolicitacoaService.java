@@ -1,6 +1,5 @@
 package com.trabalhoFinal.trabalhoFinal.services;
 
-import com.trabalhoFinal.trabalhoFinal.models.Cliente;
 import com.trabalhoFinal.trabalhoFinal.models.Solicitacao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
