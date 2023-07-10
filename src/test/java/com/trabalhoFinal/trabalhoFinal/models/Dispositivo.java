@@ -1,52 +1,65 @@
 package com.trabalhoFinal.trabalhoFinal.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ForeignKey;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import java.io.Serializable;
+import jakarta.persistence.*;
+import lombok.*;
+
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
+@Getter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "dispositivo")
-public class Dispositivo implements Serializable {
+public class Dispositivo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cod_dispositivo")
-    private Integer codDispositivo;
+    @Setter
+    private Long id;
 
-    @Column(name = "nome", length = 30)
+    @Column(name = "nome", columnDefinition = "VARCHAR(30)")
     private String nome;
 
-    @Column(name = "descricao", length = 255)
+    @Column(name = "descricao", columnDefinition = "VARCHAR(255)")
     private String descricao;
 
-    @Column(name = "dt_cadastro")
-    private Date dataCadastro;
+    @Column(name = "dt_cadastro", columnDefinition = "DATE")
+    private Date dataDeCadastro;
 
-    @Column(name = "dt_devolucao")
-    private Date dataDevolucao;
+    @Column(name = "dt_devolucao", columnDefinition = "DATE")
+    private Date dataDeDevolucao;
+
+    @OneToMany
+    private List<Solicitacao> solicitacoes;
 
     @ManyToOne
-    @JoinColumn(name = "cod_cliente", foreignKey = @ForeignKey(name = "fk_dispositivo_cliente"))
+    @JoinColumn(name = "cod_cliente", nullable = false)
     private Cliente cliente;
 
-    public Dispositivo() {
+    @Transient
+    private Long clienteId;
+
+    public Dispositivo(Long id, String nome, String descricao, Date dataDeCadastro, Date dataDeDevolucao, List<Solicitacao> solicitacoes, Cliente cliente, Long clienteId) {
+        this.id = id;
+        this.nome = nome;
+        this.descricao = descricao;
+        this.dataDeCadastro = dataDeCadastro;
+        this.dataDeDevolucao = dataDeDevolucao;
+        this.solicitacoes = solicitacoes;
+        this.cliente = cliente;
+        this.clienteId = clienteId;
     }
 
-    public Long getCodDispositivo() {
-        return Long.valueOf(codDispositivo);
+    public Long getId() {
+        return id;
     }
 
-    public void setCodDispositivo(Integer codDispositivo) {
-        this.codDispositivo = codDispositivo;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNome() {
@@ -65,20 +78,28 @@ public class Dispositivo implements Serializable {
         this.descricao = descricao;
     }
 
-    public Date getDataCadastro() {
-        return dataCadastro;
+    public Date getDataDeCadastro() {
+        return dataDeCadastro;
     }
 
-    public void setDataCadastro(Date dataCadastro) {
-        this.dataCadastro = dataCadastro;
+    public void setDataDeCadastro(Date dataDeCadastro) {
+        this.dataDeCadastro = dataDeCadastro;
     }
 
-    public Date getDataDevolucao() {
-        return dataDevolucao;
+    public Date getDataDeDevolucao() {
+        return dataDeDevolucao;
     }
 
-    public void setDataDevolucao(Date dataDevolucao) {
-        this.dataDevolucao = dataDevolucao;
+    public void setDataDeDevolucao(Date dataDeDevolucao) {
+        this.dataDeDevolucao = dataDeDevolucao;
+    }
+
+    public List<Solicitacao> getSolicitacoes() {
+        return solicitacoes;
+    }
+
+    public void setSolicitacoes(List<Solicitacao> solicitacoes) {
+        this.solicitacoes = solicitacoes;
     }
 
     public Cliente getCliente() {
@@ -89,28 +110,57 @@ public class Dispositivo implements Serializable {
         this.cliente = cliente;
     }
 
+    public Long getClienteId() {
+        return clienteId;
+    }
+
+    public void setClienteId(Long clienteId) {
+        this.clienteId = clienteId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         Dispositivo that = (Dispositivo) o;
-        return Objects.equals(codDispositivo, that.codDispositivo);
+
+        if (!Objects.equals(id, that.id)) return false;
+        if (!Objects.equals(nome, that.nome)) return false;
+        if (!Objects.equals(descricao, that.descricao)) return false;
+        if (!Objects.equals(dataDeCadastro, that.dataDeCadastro))
+            return false;
+        if (!Objects.equals(dataDeDevolucao, that.dataDeDevolucao))
+            return false;
+        if (!Objects.equals(solicitacoes, that.solicitacoes)) return false;
+        if (!Objects.equals(cliente, that.cliente)) return false;
+        return Objects.equals(clienteId, that.clienteId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(codDispositivo);
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (nome != null ? nome.hashCode() : 0);
+        result = 31 * result + (descricao != null ? descricao.hashCode() : 0);
+        result = 31 * result + (dataDeCadastro != null ? dataDeCadastro.hashCode() : 0);
+        result = 31 * result + (dataDeDevolucao != null ? dataDeDevolucao.hashCode() : 0);
+        result = 31 * result + (solicitacoes != null ? solicitacoes.hashCode() : 0);
+        result = 31 * result + (cliente != null ? cliente.hashCode() : 0);
+        result = 31 * result + (clienteId != null ? clienteId.hashCode() : 0);
+        return result;
     }
 
     @Override
     public String toString() {
         return "Dispositivo{" +
-                "codDispositivo=" + codDispositivo +
+                "id=" + id +
                 ", nome='" + nome + '\'' +
                 ", descricao='" + descricao + '\'' +
-                ", dataCadastro=" + dataCadastro +
-                ", dataDevolucao=" + dataDevolucao +
+                ", dataDeCadastro=" + dataDeCadastro +
+                ", dataDeDevolucao=" + dataDeDevolucao +
+                ", solicitacoes=" + solicitacoes +
                 ", cliente=" + cliente +
+                ", clienteId=" + clienteId +
                 '}';
     }
 }

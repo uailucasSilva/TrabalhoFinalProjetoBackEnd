@@ -1,129 +1,47 @@
 package com.trabalhoFinal.trabalhoFinal.models;
 
+import com.trabalhoif.if2023.enums.StatusSolicitacao;
 import jakarta.persistence.*;
+import lombok.*;
 
-import java.io.Serializable;
 import java.util.Date;
-import java.util.Objects;
+import java.util.List;
 
 @Entity
+@Getter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "solicitacao")
-public class Solicitacao implements Serializable {
+public class Solicitacao {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cod_solicitacao")
-    private Integer codSolicitacao;
+    @Setter
+    private Long id;
 
-    @Column(name = "titulo", nullable = false, length = 30)
+    @Column(name = "titulo", columnDefinition = "VARCHAR(30)")
     private String titulo;
 
-    @Column(name = "descricao", length = 255)
+    @Column(name = "descricao", columnDefinition = "VARCHAR(255)")
     private String descricao;
 
-    @Column(name = "dt_hora_criacao")
+    @Column(name = "dt_hora_criacao", columnDefinition = "DATETIME")
     private Date dataHoraCriacao;
 
-    @Column(name = "dt_hora_finalizacao")
+    @Column(name = "dt_hora_finalizacao", columnDefinition = "DATETIME")
     private Date dataHoraFinalizacao;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status_solicitacao", length = 20)
+    @Column(name = "status_solicitacao")
     private StatusSolicitacao statusSolicitacao;
 
     @ManyToOne
-    @JoinColumn(name = "cod_dispositivo", foreignKey = @ForeignKey(name = "fk_solicitacao_dispositivo"))
+    @JoinColumn(name = "cod_dispositivo", nullable = false)
     private Dispositivo dispositivo;
 
-    public enum StatusSolicitacao {
-        AGUARDANDO_ATENDIMENTO,
-        EM_ATENDIMENTO,
-        ENCERRADO,
-        CANCELADO
-    }
+    @OneToMany
+    private List<Atendimento> atendimentos;
 
-    public Solicitacao() {
-    }
-
-    public Integer getCodSolicitacao() {
-        return codSolicitacao;
-    }
-
-    public void setCodSolicitacao(Integer codSolicitacao) {
-        this.codSolicitacao = codSolicitacao;
-    }
-
-    public String getTitulo() {
-        return titulo;
-    }
-
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
-    public Date getDataHoraCriacao() {
-        return dataHoraCriacao;
-    }
-
-    public void setDataHoraCriacao(Date dataHoraCriacao) {
-        this.dataHoraCriacao = dataHoraCriacao;
-    }
-
-    public Date getDataHoraFinalizacao() {
-        return dataHoraFinalizacao;
-    }
-
-    public void setDataHoraFinalizacao(Date dataHoraFinalizacao) {
-        this.dataHoraFinalizacao = dataHoraFinalizacao;
-    }
-
-    public StatusSolicitacao getStatusSolicitacao() {
-        return statusSolicitacao;
-    }
-
-    public void setStatusSolicitacao(StatusSolicitacao statusSolicitacao) {
-        this.statusSolicitacao = statusSolicitacao;
-    }
-
-    public Dispositivo getDispositivo() {
-        return dispositivo;
-    }
-
-    public void setDispositivo(Dispositivo dispositivo) {
-        this.dispositivo = dispositivo;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Solicitacao that = (Solicitacao) o;
-        return Objects.equals(codSolicitacao, that.codSolicitacao);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(codSolicitacao);
-    }
-
-    @Override
-    public String toString() {
-        return "Solicitacao{" +
-                "codSolicitacao=" + codSolicitacao +
-                ", titulo='" + titulo + '\'' +
-                ", descricao='" + descricao + '\'' +
-                ", dataHoraCriacao=" + dataHoraCriacao +
-                ", dataHoraFinalizacao=" + dataHoraFinalizacao +
-                ", statusSolicitacao=" + statusSolicitacao +
-                ", dispositivo=" + dispositivo +
-                '}';
-    }
 }

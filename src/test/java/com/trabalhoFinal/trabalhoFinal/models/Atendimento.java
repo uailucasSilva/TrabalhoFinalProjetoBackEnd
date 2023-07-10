@@ -1,98 +1,39 @@
 package com.trabalhoFinal.trabalhoFinal.models;
 
 import jakarta.persistence.*;
+import lombok.*;
 
-import java.io.Serializable;
 import java.util.Date;
-import java.util.Objects;
+import java.sql.Time;
 
+@Getter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "atendimento")
-public class Atendimento implements Serializable {
+public class Atendimento {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cod_atendimento")
-    private Integer codAtendimento;
+    @Setter
+    private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "cod_atendente", foreignKey = @ForeignKey(name = "fk_atendimento_atendente"))
+    @JoinColumn(name = "cod_atendente", nullable = false)
     private Atendente atendente;
 
     @ManyToOne
-    @JoinColumn(name = "cod_solicitacao", foreignKey = @ForeignKey(name = "fk_atendimento_solicitacao"))
+    @JoinColumn(name = "cod_solicitacao", nullable = false)
     private Solicitacao solicitacao;
 
-    @Column(name = "dt_hora_atendimento")
-    private Date dataHoraAtendimento;
+    @Column(name = "dt_hora_atendimento", columnDefinition = "DATETIME")
+    private Date dataHoraDoAtendimento;
 
-    @Column(name = "observacao", length = 255)
+    @Column(name = "observacao", columnDefinition = "VARCHAR(255)")
     private String observacao;
 
-    public Atendimento() {
-    }
 
-    public Integer getCodAtendimento() {
-        return codAtendimento;
-    }
 
-    public void setCodAtendimento(Integer codAtendimento) {
-        this.codAtendimento = codAtendimento;
-    }
-
-    public Atendente getAtendente() {
-        return atendente;
-    }
-
-    public void setAtendente(Atendente atendente) {
-        this.atendente = atendente;
-    }
-
-    public Solicitacao getSolicitacao() {
-        return solicitacao;
-    }
-
-    public void setSolicitacao(Solicitacao solicitacao) {
-        this.solicitacao = solicitacao;
-    }
-
-    public Date getDataHoraAtendimento() {
-        return dataHoraAtendimento;
-    }
-
-    public void setDataHoraAtendimento(Date dataHoraAtendimento) {
-        this.dataHoraAtendimento = dataHoraAtendimento;
-    }
-
-    public String getObservacao() {
-        return observacao;
-    }
-
-    public void setObservacao(String observacao) {
-        this.observacao = observacao;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Atendimento that = (Atendimento) o;
-        return Objects.equals(codAtendimento, that.codAtendimento);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(codAtendimento);
-    }
-
-    @Override
-    public String toString() {
-        return "Atendimento{" +
-                "codAtendimento=" + codAtendimento +
-                ", atendente=" + atendente +
-                ", solicitacao=" + solicitacao +
-                ", dataHoraAtendimento=" + dataHoraAtendimento +
-                ", observacao='" + observacao + '\'' +
-                '}';
-    }
 }

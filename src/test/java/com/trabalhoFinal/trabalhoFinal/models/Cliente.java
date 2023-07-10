@@ -1,65 +1,84 @@
 package com.trabalhoFinal.trabalhoFinal.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import java.io.Serializable;
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
+@Getter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "cliente")
-public class Cliente implements Serializable {
+public class Cliente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cod_cliente")
-    private Integer codCliente;
+    @Setter
+    private Long id;
 
-    @Column(name = "nome", length = 50)
+    @Column(name = "nome", columnDefinition = "VARCHAR(70)")
     private String nome;
 
-    @Column(name = "nro_matricula", length = 11)
-    private String numeroMatricula;
+    @Column(name = "nro_matricula", columnDefinition = "CHAR(11)")
+    private String numeroDaMatricula;
 
-    @Column(name = "dt_nasc")
-    private java.sql.Date dataNascimento;
+    @Column(name = "dt_nasc", columnDefinition = "DATE")
+    private Date dataDeNascimento;
 
-    @Column(name = "telefone", length = 15)
+    @Column(name = "telefone", columnDefinition = "CHAR(15)")
     private String telefone;
 
-    @Column(name = "email", length = 100)
+    @Column(name = "email", columnDefinition = "VARCHAR(100)")
     private String email;
 
-    @Column(name = "senha", length = 255)
+    @Column(name = "senha", columnDefinition = "VARCHAR(255)")
     private String senha;
 
-    @Column(name = "rua", length = 70)
+    @Column(name = "rua", columnDefinition = "VARCHAR(70)")
     private String rua;
 
-    @Column(name = "nro", length = 15)
-    private String numero;
+    @Column(name = "nro", columnDefinition = "VARCHAR(15)")
+    private String numeroDaCasa;
 
-    @Column(name = "bairro", length = 30)
+    @Column(name = "bairro", columnDefinition = "VARCHAR(30)")
     private String bairro;
 
-    @Column(name = "cidade", length = 40)
+    @Column(name = "cidade", columnDefinition = "VARCHAR(40)")
     private String cidade;
 
-    @Column(name = "cep", length = 9)
+    @Column(name = "cep", columnDefinition = "VARCHAR(9)")
     private String cep;
 
-    public Cliente() {
+    @OneToMany
+    private List<Dispositivo> dispositivos;
+
+    public Cliente(Long id, String nome, String numeroDaMatricula, Date dataDeNascimento, String telefone, String email, String senha, String rua, String numeroDaCasa, String bairro, String cidade, String cep, List<Dispositivo> dispositivos) {
+        this.id = id;
+        this.nome = nome;
+        this.numeroDaMatricula = numeroDaMatricula;
+        this.dataDeNascimento = dataDeNascimento;
+        this.telefone = telefone;
+        this.email = email;
+        this.senha = senha;
+        this.rua = rua;
+        this.numeroDaCasa = numeroDaCasa;
+        this.bairro = bairro;
+        this.cidade = cidade;
+        this.cep = cep;
+        this.dispositivos = dispositivos;
     }
 
-    public Long getCodCliente() {
-        return codCliente;
+    public Long getId() {
+        return id;
     }
 
-    public void setCodCliente(Integer codCliente) {
-        this.codCliente = codCliente;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNome() {
@@ -70,20 +89,20 @@ public class Cliente implements Serializable {
         this.nome = nome;
     }
 
-    public String getNumeroMatricula() {
-        return numeroMatricula;
+    public String getNumeroDaMatricula() {
+        return numeroDaMatricula;
     }
 
-    public void setNumeroMatricula(String numeroMatricula) {
-        this.numeroMatricula = numeroMatricula;
+    public void setNumeroDaMatricula(String numeroDaMatricula) {
+        this.numeroDaMatricula = numeroDaMatricula;
     }
 
-    public java.sql.Date getDataNascimento() {
-        return dataNascimento;
+    public Date getDataDeNascimento() {
+        return dataDeNascimento;
     }
 
-    public void setDataNascimento(java.sql.Date dataNascimento) {
-        this.dataNascimento = dataNascimento;
+    public void setDataDeNascimento(Date dataDeNascimento) {
+        this.dataDeNascimento = dataDeNascimento;
     }
 
     public String getTelefone() {
@@ -118,12 +137,12 @@ public class Cliente implements Serializable {
         this.rua = rua;
     }
 
-    public String getNumero() {
-        return numero;
+    public String getNumeroDaCasa() {
+        return numeroDaCasa;
     }
 
-    public void setNumero(String numero) {
-        this.numero = numero;
+    public void setNumeroDaCasa(String numeroDaCasa) {
+        this.numeroDaCasa = numeroDaCasa;
     }
 
     public String getBairro() {
@@ -150,34 +169,73 @@ public class Cliente implements Serializable {
         this.cep = cep;
     }
 
+    public List<Dispositivo> getDispositivos() {
+        return dispositivos;
+    }
+
+    public void setDispositivos(List<Dispositivo> dispositivos) {
+        this.dispositivos = dispositivos;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         Cliente cliente = (Cliente) o;
-        return Objects.equals(codCliente, cliente.codCliente);
+
+        if (!Objects.equals(id, cliente.id)) return false;
+        if (!Objects.equals(nome, cliente.nome)) return false;
+        if (!Objects.equals(numeroDaMatricula, cliente.numeroDaMatricula))
+            return false;
+        if (!Objects.equals(dataDeNascimento, cliente.dataDeNascimento))
+            return false;
+        if (!Objects.equals(telefone, cliente.telefone)) return false;
+        if (!Objects.equals(email, cliente.email)) return false;
+        if (!Objects.equals(senha, cliente.senha)) return false;
+        if (!Objects.equals(rua, cliente.rua)) return false;
+        if (!Objects.equals(numeroDaCasa, cliente.numeroDaCasa))
+            return false;
+        if (!Objects.equals(bairro, cliente.bairro)) return false;
+        if (!Objects.equals(cidade, cliente.cidade)) return false;
+        if (!Objects.equals(cep, cliente.cep)) return false;
+        return Objects.equals(dispositivos, cliente.dispositivos);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(codCliente);
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (nome != null ? nome.hashCode() : 0);
+        result = 31 * result + (numeroDaMatricula != null ? numeroDaMatricula.hashCode() : 0);
+        result = 31 * result + (dataDeNascimento != null ? dataDeNascimento.hashCode() : 0);
+        result = 31 * result + (telefone != null ? telefone.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (senha != null ? senha.hashCode() : 0);
+        result = 31 * result + (rua != null ? rua.hashCode() : 0);
+        result = 31 * result + (numeroDaCasa != null ? numeroDaCasa.hashCode() : 0);
+        result = 31 * result + (bairro != null ? bairro.hashCode() : 0);
+        result = 31 * result + (cidade != null ? cidade.hashCode() : 0);
+        result = 31 * result + (cep != null ? cep.hashCode() : 0);
+        result = 31 * result + (dispositivos != null ? dispositivos.hashCode() : 0);
+        return result;
     }
 
     @Override
     public String toString() {
         return "Cliente{" +
-                "codCliente=" + codCliente +
+                "id=" + id +
                 ", nome='" + nome + '\'' +
-                ", numeroMatricula='" + numeroMatricula + '\'' +
-                ", dataNascimento=" + dataNascimento +
+                ", numeroDaMatricula='" + numeroDaMatricula + '\'' +
+                ", dataDeNascimento=" + dataDeNascimento +
                 ", telefone='" + telefone + '\'' +
                 ", email='" + email + '\'' +
                 ", senha='" + senha + '\'' +
                 ", rua='" + rua + '\'' +
-                ", numero='" + numero + '\'' +
+                ", numeroDaCasa='" + numeroDaCasa + '\'' +
                 ", bairro='" + bairro + '\'' +
                 ", cidade='" + cidade + '\'' +
                 ", cep='" + cep + '\'' +
+                ", dispositivos=" + dispositivos +
                 '}';
     }
 }
