@@ -1,46 +1,89 @@
 package com.trabalhoFinal.trabalhoFinal.services;
 
 import com.trabalhoFinal.trabalhoFinal.models.Solicitacao;
+import com.trabalhoFinal.trabalhoFinal.repositories.DispositivoRepository;
+import com.trabalhoFinal.trabalhoFinal.repositories.SolicitacaoRepository;
+import com.trabalhoFinal.trabalhoFinal.services.mapper.entity.SolicitacaoMapper;
+import com.trabalhoFinal.trabalhoFinal.services.mapper.vo.SolicitacaoVOMapper;
+import com.trabalhoFinal.trabalhoFinal.services.vo.SolicitacaoVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
-public class SolicitacoaService {
+public class SolicitacaoService {
+
     @Autowired
-    private SolicitacoaService solicitacoaService;
+    private SolicitacaoRepository repository;
 
-    //Listar todos
-    public List<Solicitacao> findAll() {
-        return solicitacoaService.findAll();
+    @Autowired
+    private DispositivoRepository dispositivoRepository;
+
+    @Autowired
+    private SolicitacaoMapper solicitacaoMapper;
+
+    @Autowired
+    private SolicitacaoVOMapper voMapper;
+
+    public SolicitacaoVO create(SolicitacaoVO solicitacaoVO) {
+        dispositivoRepository.findById(solicitacaoVO.getDispositivoId()).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Dispositivo não encontrado"));
+
+        Solicitacao solicitacao = solicitacaoMapper.map(solicitacaoVO);
+        Solicitacao dbSolicitacao = repository.save(solicitacao);
+
+        SolicitacaoVO newSolicitacao = voMapper.map(dbSolicitacao);
+        return newSolicitacao;
     }
 
-    //Buscar por ID
-    public Optional<Solicitacao> findById(Long codDispositivo) {
-        return solicitacoaService.findById(codDispositivo);
+    public List<SolicitacaoVO> getAll() {
+        List<Solicitacao> solicitacaos = repository.findAll();
+
+        List<SolicitacaoVO> solicitacaoVOList = solicitacaos.stream()
+                .map(voMapper::map)
+                .collect(Collectors.toList());
+
+        return solicitacaoVOList;
     }
 
-    //Salvar Solicitacao
-    public Solicitacao saveSolicitacao(Solicitacao solicitacao) {
-        return solicitacoaService.save(solicitacao);
+    public SolicitacaoVO getById(Long id) {
+        Solicitacao solicitacao = repository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        SolicitacaoVO solicitacaoVO = voMapper.map(solicitacao);
+        return solicitacaoVO;
     }
 
-    //Atualizar Dispositivo
-    public Solicitacao updateDispositivo(Solicitacao solicitacao) {
-        var dbSolicitacao = findById(solicitacao.getCodSolicitacao());
-        if( dbSolicitacao != null && !dbSolicitacao.isEmpty()) {
-            return solicitacoaService.save(solicitacao);
-        }
-        return null;
+    public SolicitacaoVO update(SolicitacaoVO solicitacaoVO, Long id) {
+        repository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        dispositivoRepository.findById(solicitacaoVO.getDispositivoId()).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Dispositivo não encontrado"));
+
+        Solicitacao solicitacao = solicitacaoMapper.map(solicitacaoVO);
+
+        solicitacao.setId(id);
+        Solicitacao updated = repository.save(solicitacao);
+
+        SolicitacaoVO newSolicitacaoVO = voMapper.map(updated);
+        return newSolicitacaoVO;
     }
 
-    //Deletar Dispositivo
-    public void deleteDispositivo(Long id) {
-        var dbSolicitacao = findById(id);
-        if( dbSolicitacao != null && !dbSolicitacao.isEmpty()) {
-            solicitacoaService.deleteById(Math.toIntExact(id));
-        }
+    public void delete(Long id) {
+        Solicitacao solicitacao = repository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        repository.deleteById(id);
+    }
+
+    public List<SolicitacaoVO> getAllEmProgresso() {
+        List<Solicitacao> allEmProgresso = repository.getAllEmProgresso();
+        return allEmProgresso.stream().map(voMapper::map).collect(Collectors.toList());
     }
 }

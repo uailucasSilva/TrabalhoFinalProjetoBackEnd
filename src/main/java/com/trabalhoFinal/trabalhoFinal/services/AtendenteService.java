@@ -1,4 +1,5 @@
 package com.trabalhoFinal.trabalhoFinal.services;
+
 import com.trabalhoFinal.trabalhoFinal.models.Atendente;
 import com.trabalhoFinal.trabalhoFinal.enums.NivelDeAcesso;
 import com.trabalhoFinal.trabalhoFinal.repositories.AtendenteRepository;
@@ -83,3 +84,4 @@ public class AtendenteService {
                 .collect(Collectors.toList());
     }
 }
+
