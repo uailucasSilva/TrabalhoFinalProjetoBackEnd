@@ -11,7 +11,6 @@ import java.util.Objects;
 @Entity
 @Getter
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "solicitacao")
 public class Solicitacao {
@@ -45,7 +44,8 @@ public class Solicitacao {
     @OneToMany
     private List<Atendimento> atendimentos;
 
-    public Solicitacao(Long id, String titulo, String descricao, Date dataHoraCriacao, Date dataHoraFinalizacao, StatusSolicitacao statusSolicitacao, Dispositivo dispositivo, List<Atendimento> atendimentos) {
+    public Solicitacao(Long id, String titulo, String descricao, Date dataHoraCriacao, Date dataHoraFinalizacao,
+            StatusSolicitacao statusSolicitacao, Dispositivo dispositivo, List<Atendimento> atendimentos) {
         this.id = id;
         this.titulo = titulo;
         this.descricao = descricao;
@@ -122,20 +122,27 @@ public class Solicitacao {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
 
         Solicitacao that = (Solicitacao) o;
 
-        if (!Objects.equals(id, that.id)) return false;
-        if (!Objects.equals(titulo, that.titulo)) return false;
-        if (!Objects.equals(descricao, that.descricao)) return false;
+        if (!Objects.equals(id, that.id))
+            return false;
+        if (!Objects.equals(titulo, that.titulo))
+            return false;
+        if (!Objects.equals(descricao, that.descricao))
+            return false;
         if (!Objects.equals(dataHoraCriacao, that.dataHoraCriacao))
             return false;
         if (!Objects.equals(dataHoraFinalizacao, that.dataHoraFinalizacao))
             return false;
-        if (statusSolicitacao != that.statusSolicitacao) return false;
-        if (!Objects.equals(dispositivo, that.dispositivo)) return false;
+        if (statusSolicitacao != that.statusSolicitacao)
+            return false;
+        if (!Objects.equals(dispositivo, that.dispositivo))
+            return false;
         return Objects.equals(atendimentos, that.atendimentos);
     }
 
