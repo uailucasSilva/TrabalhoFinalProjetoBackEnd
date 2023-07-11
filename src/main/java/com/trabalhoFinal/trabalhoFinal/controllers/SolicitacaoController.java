@@ -24,6 +24,7 @@ public class SolicitacaoController {
       MediaType.APPLICATION_YML }, consumes = { MediaType.APPLICATION_JSON,
           MediaType.APPLICATION_XML,
           MediaType.APPLICATION_YML })
+
   public ResponseEntity<SolicitacaoVO> create(@RequestBody SolicitacaoVO solicitacaoVO) {
     SolicitacaoVO created = service.create(solicitacaoVO);
     return new ResponseEntity<>(created, HttpStatus.CREATED);
