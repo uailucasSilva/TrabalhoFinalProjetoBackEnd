@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/cliente")
+@RequestMapping("cliente")
 @Tag(name = "Cliente", description = "Endpoints para CRUD de cliente.")
 public class ClienteController {
 
@@ -60,7 +60,9 @@ public class ClienteController {
         return ResponseEntity.ok(all);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping(value = "/{id}", produces = { MediaType.APPLICATION_JSON,
+            MediaType.APPLICATION_XML,
+            MediaType.APPLICATION_YML })
     @Operation(summary = "Busca um cliente pelo ID.", description = "Busca um cliente pelo ID.", tags = {
             "Cliente" }, responses = {
                     @ApiResponse(description = "Success", responseCode = "200", content = {
@@ -94,7 +96,7 @@ public class ClienteController {
         return ResponseEntity.ok(byMatricula);
     }
 
-    @PutMapping(produces = { MediaType.APPLICATION_JSON,
+    @PutMapping(value = "/{id}", produces = { MediaType.APPLICATION_JSON,
             MediaType.APPLICATION_XML,
             MediaType.APPLICATION_YML }, consumes = { MediaType.APPLICATION_JSON,
                     MediaType.APPLICATION_XML,

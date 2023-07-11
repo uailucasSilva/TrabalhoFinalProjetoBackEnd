@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/atendente")
+@RequestMapping("atendente")
 @Tag(name = "Atendente", description = "Endpoints para CRUD de atendente.")
 public class AtendenteController {
 

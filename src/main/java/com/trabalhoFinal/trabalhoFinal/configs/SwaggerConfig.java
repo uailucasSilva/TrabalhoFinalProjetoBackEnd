@@ -14,14 +14,13 @@ public class SwaggerConfig {
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("Documentação da API sobre o Sistema de atendimentos")
+                        .title("Documentação da API sobre o Sistema de atendimentos de solicitações HelpFlow")
                         .version("Version 1 (v1)")
                         .description("""
-          Esta documentação apresenta os endpoints
-          responsáveis pelas funcionalidades de Atendente, Atendimento,
-          Cliente, dispositivo e solicitiação
-          """
-                        )
+                                Esta documentação apresenta os endpoints
+                                responsáveis pelas funcionalidades de Atendente, Atendimento,
+                                Cliente, dispositivo e solicitiação
+                                """)
                         .termsOfService("http://mytersm.com")
                         .license(new License()
                                 .name("Apache 2.0")

@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/mydatabase?createDatabaseIfNotExist=true
+    url: jdbc:mysql://localhost:3306/helpflow?createDatabaseIfNotExist=true
     username: root
     password: 
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -19,7 +19,8 @@ server:
 
 springdoc:
   paths-to-match:
-    - /*
+    - /**
   swagger-ui:
     use-root-path: true
     enabled: true
+
