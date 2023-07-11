@@ -10,7 +10,6 @@ import java.util.Objects;
 @Entity
 @Getter
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "dispositivo")
 public class Dispositivo {
@@ -43,7 +42,8 @@ public class Dispositivo {
     @Transient
     private Long clienteId;
 
-    public Dispositivo(Long id, String nome, String descricao, Date dataDeCadastro, Date dataDeDevolucao, List<Solicitacao> solicitacoes, Cliente cliente, Long clienteId) {
+    public Dispositivo(Long id, String nome, String descricao, Date dataDeCadastro, Date dataDeDevolucao,
+            List<Solicitacao> solicitacoes, Cliente cliente, Long clienteId) {
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
@@ -120,20 +120,27 @@ public class Dispositivo {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
 
         Dispositivo that = (Dispositivo) o;
 
-        if (!Objects.equals(id, that.id)) return false;
-        if (!Objects.equals(nome, that.nome)) return false;
-        if (!Objects.equals(descricao, that.descricao)) return false;
+        if (!Objects.equals(id, that.id))
+            return false;
+        if (!Objects.equals(nome, that.nome))
+            return false;
+        if (!Objects.equals(descricao, that.descricao))
+            return false;
         if (!Objects.equals(dataDeCadastro, that.dataDeCadastro))
             return false;
         if (!Objects.equals(dataDeDevolucao, that.dataDeDevolucao))
             return false;
-        if (!Objects.equals(solicitacoes, that.solicitacoes)) return false;
-        if (!Objects.equals(cliente, that.cliente)) return false;
+        if (!Objects.equals(solicitacoes, that.solicitacoes))
+            return false;
+        if (!Objects.equals(cliente, that.cliente))
+            return false;
         return Objects.equals(clienteId, that.clienteId);
     }
 

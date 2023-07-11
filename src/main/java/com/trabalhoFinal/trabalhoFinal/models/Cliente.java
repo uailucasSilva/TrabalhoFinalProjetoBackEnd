@@ -10,7 +10,6 @@ import java.util.Objects;
 @Entity
 @Getter
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "cliente")
 public class Cliente {
@@ -57,7 +56,9 @@ public class Cliente {
     @OneToMany
     private List<Dispositivo> dispositivos;
 
-    public Cliente(Long id, String nome, String numeroDaMatricula, Date dataDeNascimento, String telefone, String email, String senha, String rua, String numeroDaCasa, String bairro, String cidade, String cep, List<Dispositivo> dispositivos) {
+    public Cliente(Long id, String nome, String numeroDaMatricula, Date dataDeNascimento, String telefone, String email,
+            String senha, String rua, String numeroDaCasa, String bairro, String cidade, String cep,
+            List<Dispositivo> dispositivos) {
         this.id = id;
         this.nome = nome;
         this.numeroDaMatricula = numeroDaMatricula;
@@ -179,26 +180,37 @@ public class Cliente {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
 
         Cliente cliente = (Cliente) o;
 
-        if (!Objects.equals(id, cliente.id)) return false;
-        if (!Objects.equals(nome, cliente.nome)) return false;
+        if (!Objects.equals(id, cliente.id))
+            return false;
+        if (!Objects.equals(nome, cliente.nome))
+            return false;
         if (!Objects.equals(numeroDaMatricula, cliente.numeroDaMatricula))
             return false;
         if (!Objects.equals(dataDeNascimento, cliente.dataDeNascimento))
             return false;
-        if (!Objects.equals(telefone, cliente.telefone)) return false;
-        if (!Objects.equals(email, cliente.email)) return false;
-        if (!Objects.equals(senha, cliente.senha)) return false;
-        if (!Objects.equals(rua, cliente.rua)) return false;
+        if (!Objects.equals(telefone, cliente.telefone))
+            return false;
+        if (!Objects.equals(email, cliente.email))
+            return false;
+        if (!Objects.equals(senha, cliente.senha))
+            return false;
+        if (!Objects.equals(rua, cliente.rua))
+            return false;
         if (!Objects.equals(numeroDaCasa, cliente.numeroDaCasa))
             return false;
-        if (!Objects.equals(bairro, cliente.bairro)) return false;
-        if (!Objects.equals(cidade, cliente.cidade)) return false;
-        if (!Objects.equals(cep, cliente.cep)) return false;
+        if (!Objects.equals(bairro, cliente.bairro))
+            return false;
+        if (!Objects.equals(cidade, cliente.cidade))
+            return false;
+        if (!Objects.equals(cep, cliente.cep))
+            return false;
         return Objects.equals(dispositivos, cliente.dispositivos);
     }
 
